@@ -3,7 +3,9 @@
 	require_once("conexion/require_once.php");
 	
 	$conex= new Conection($servidor,$usuario,$pass,$db );
-	$queryGaleria="SELECT galeria_selfie.id_selfie, galeria_selfie.titulo, galeria_selfie.descripcion, galeria_selfie.ubicacion_foto, galeria_selfie.fecha_alta, COUNT(usuario_votos_selfie.id_selfie) AS cont_votos FROM galeria_selfie LEFT JOIN usuario_votos_selfie ON galeria_selfie.id_selfie = usuario_votos_selfie.id_selfie GROUP BY usuario_votos_selfie.id_selfie ORDER BY galeria_selfie.id_selfie DESC LIMIT 0,15";
+	$queryGaleria="SELECT galeria_selfie.id_selfie, galeria_selfie.titulo, galeria_selfie.descripcion, galeria_selfie.ubicacion_foto, 
+	galeria_selfie.fecha_alta, COUNT(usuario_votos_selfie.id_selfie) AS cont_votos FROM galeria_selfie LEFT JOIN usuario_votos_selfie 
+	ON galeria_selfie.id_selfie = usuario_votos_selfie.id_selfie GROUP BY usuario_votos_selfie.id_selfie ORDER BY galeria_selfie.id_selfie DESC LIMIT 0,15";
 	$queryContador = "select count(galeria_selfie.id_selfie) as total From galeria_selfie";
 
 	$resultsGaleria =$conex->consulta($queryGaleria);
