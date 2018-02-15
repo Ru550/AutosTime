@@ -23,15 +23,15 @@
 	$resultsHumor =$conex->consulta($qryHumor);
 ?>
 <div class="banner-right-text">
-	<h3 class="tittle"><a href="todasNoticias.php">Noticias </a><i class="glyphicon glyphicon-facetime-video"></i></h3>
+	<h3 class="tittle"><a href="todasNoticias.php">Noticias </a><i class="glyphicon glyphicon-bullhorn"></i></h3>
 	<div class="general-news">
 		<div class="general-inner">
 			<div class="general-text">
 				<?php
 					while($rowPrimNoticia = mysqli_fetch_array($resultsPrimNoticia)){
 				?>
-					<a href="pDetalle/detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><img src="<?php echo $rowPrimNoticia['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
-					<h5 class="top"><a href="pDetalle/detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><?php echo utf8_encode($rowPrimNoticia['titulo']);?></a></h5>
+					<a href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><img src="<?php echo $rowPrimNoticia['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
+					<h5 class="top"><a href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><?php echo utf8_encode($rowPrimNoticia['titulo']);?></a></h5>
 					<p><?php echo utf8_encode($rowPrimNoticia['resumen']);?> ...</p>
 					<p><i class="glyphicon glyphicon-time"></i> <?php echo date("d/m/Y", strtotime($rowPrimNoticia['fecha'])); ?> <span class="glyphicon glyphicon-comment"></span> <?php echo $rowPrimNoticia['cont_comentarios'];?> <span class="glyphicon glyphicon-eye-open"></span>
 					   <?php echo $rowPrimNoticia['cont_visitas'];?> <a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
@@ -49,8 +49,8 @@
 							<img src="<?php echo $rowNoticias['ubicacion_foto'];?>" class="img-responsive" alt="">
 						</div>
 						<div class="col-md-9 item-details">
-							<h5 class="inner two"><a class="span_link" href="pDetalle/detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><?php echo utf8_encode($rowNoticias['titulo']);?></a></h5>
-							 <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i> <?php echo date("d/m/Y", strtotime($rowNoticias['fecha']));?> <span class="glyphicon glyphicon-comment"></span> <?php echo $rowNoticias['cont_comentarios'];?> <i class="glyphicon glyphicon-eye-open"></i><?php echo $rowNoticias['cont_visitas'];?><a class="span_link" href="pDetalle/detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></div>
+							<h5 class="inner two"><a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><?php echo utf8_encode($rowNoticias['titulo']);?></a></h5>
+							 <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i> <?php echo date("d/m/Y", strtotime($rowNoticias['fecha']));?> <span class="glyphicon glyphicon-comment"></span> <?php echo $rowNoticias['cont_comentarios'];?> <i class="glyphicon glyphicon-eye-open"></i><?php echo $rowNoticias['cont_visitas'];?><a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></div>
 						 </div>
 						<div class="clearfix"></div>
 					</div>

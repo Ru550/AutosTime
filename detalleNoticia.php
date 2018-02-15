@@ -36,16 +36,20 @@
 	        <?php
 				while($rowPrimFoto = mysqli_fetch_array($resultPrimFoto)){
 			?>
-               <h3 class="title"><?php echo utf8_encode($rowPrimFoto['titulo']);?> <i class="glyphicon glyphicon-file"></i></h3>
-               <img src="<?php echo $rowPrimFoto['ubicacion_foto'];?>" class="img-responsive" alt="">           
-            <?php
-				}
+               <h3 class="title"><?php echo utf8_encode($rowPrimFoto['titulo']);?> <i class="glyphicon glyphicon-bullhorn"></i></h3>
+			   
+			   <?php
 				if(isset($_SESSION['id_tipo_usuario'])){
 					if ($_SESSION["id_tipo_usuario"] == 1){ ?>
                     	<br />
-						<h5><a href="editaNoticiaP1.php?idNoticia=<?php echo $idNoticia ?> "><b><i>Editar Noticia</i></b></a></h5>
+						<h5><center><a href="editaNoticiaP1.php?idNoticia=<?php echo $idNoticia ?>"><b><i><u>Editar esta noticia</u></i></b></a></center></h5>
 				<?php
 					}
+				}
+			?>
+			   <br/>
+               <img src="<?php echo $rowPrimFoto['ubicacion_foto'];?>" class="img-responsive" alt="">
+			<?php
 				}
               while($rowNoticia = mysqli_fetch_array($resultNoticia)){
             ?>
@@ -84,10 +88,12 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
+									
+									
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">
 									<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
-									<figcaption>
-										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-									</figcaption>
+									</a>
+									
 								</figure>
 							 </div>
 						<?php

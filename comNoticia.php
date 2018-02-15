@@ -4,6 +4,7 @@
 	$conex= new Conection($servidor,$usuario,$pass,$db );
 	
 	foreach($_POST as $i => $v){
+		echo $i.$v;
 	}
 	
 	$idUsuario=$_POST['idUsuario'];

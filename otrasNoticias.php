@@ -16,7 +16,7 @@
 	$resultsHumor = $conex->consulta($qryHumor);
 ?>
 <div class="banner-right-text">
-	<h3 class="tittle">Noticias <i class="glyphicon glyphicon-facetime-video"></i></h3>
+	<h3 class="tittle">Noticias <i class="glyphicon glyphicon-bullhorn"></i></h3>
 	<div class="general-news">
 		<div class="general-inner">
 			<div class="general-text">
