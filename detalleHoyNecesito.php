@@ -35,6 +35,7 @@
 		<div class="banner-section">
 	        <?php
 				while($rowPrimFoto = mysqli_fetch_array($resultPrimFoto)){
+				$titulo = utf8_encode($rowPrimFoto['titulo']);
 			?>
                    <h3 class="tittle"><?php echo utf8_encode($rowPrimFoto['titulo']);?> <i class="glyphicon glyphicon-file"></i></h3>
                    <img src="<?php echo $rowPrimFoto['ubicacion_foto'];?>" class="img-responsive" alt="">           
@@ -83,20 +84,26 @@
                         </p>
                     </div>
                 </div>
+			<?php 
+				if(!empty($rowNoticia['url_facebook']) || !empty($rowNoticia['url_twitter'])){
+			?>
 			<div class="single-bottom">
 				<div class="single-middle">
 					<ul class="social-share">
 						<li><span>Redes Sociales del Servicio: </span></li>
                         <li></li>
-						<li><a href="<?php echo $rowHoyNecesito['url_facebook'];?>" target="_blank"><i> </i></a></li>						
-						<li><a href="<?php echo $rowHoyNecesito['url_twitter'];?>" target="_blank"><i class="tin"> </i></a></li>				
+						<?php if(!empty($rowHoyNecesito['url_facebook'])){ ?>
+							<li><a href="<?php echo $rowHoyNecesito['url_facebook'];?>" target="_blank"><i> </i></a></li>
+						<?php } if(!empty($rowHoyNecesito['url_twitter'])){ ?>						
+							<li><a href="<?php echo $rowHoyNecesito['url_twitter'];?>" target="_blank"><i class="tin"> </i></a></li>
+						<?php } ?>		
 					</ul>
 					<i class="arrow"> </i>
 					<div class="clearfix"> </div>
 			   </div>
 			</div>			
 			<?php
-				}
+				}}
 			?>
              <div class="gallery-section">
 				<h3 class="tittle">Galeria <i class="glyphicon glyphicon-fullscreen"></i></h3>
@@ -107,10 +114,9 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
-									<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
-									<figcaption>
-										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-									</figcaption>
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="<?php echo $titulo; ?>">
+										<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
+									</a>
 								</figure>
 							 </div>
 						<?php
@@ -137,7 +143,7 @@
                             <p><h5><?php echo utf8_encode($rowComentario['titulo']);?></h5></p>
                             <p><?php echo utf8_encode($rowComentario['descripcion']);?></p>
                             <ul>
-                                <li><?php echo date("d/m/Y h:m:s", strtotime($rowComentario['fecha']));?></li>
+								<li><?php echo date("d/m/Y g:i:s A", strtotime($rowComentario['fecha']));?></li>
                             </ul>
                         </div>
                         <div class="clearfix"> </div>

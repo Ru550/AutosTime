@@ -24,8 +24,8 @@
 					while($rowPrimHoyNecesito = mysqli_fetch_array($resultsPrimHoyNecesito)){
 				?>
 					<a href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowPrimHoyNecesito['id_hoy_necesito'];?>"><img src="<?php echo $rowPrimHoyNecesito['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
-					<h5 class="top"><a href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowPrimHoyNecesito['id_hoy_necesito'];?>"><?php echo $rowPrimHoyNecesito['titulo'];?></a></h5>
-					<p><?php echo $rowPrimHoyNecesito['resumen'];?> ...</p>
+					<h5 class="top"><a href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowPrimHoyNecesito['id_hoy_necesito'];?>"><?php echo utf8_encode($rowPrimHoyNecesito['titulo']);?></a></h5>
+					<p><?php echo utf8_encode($rowPrimHoyNecesito['resumen']);?> ...</p>
 					<p><?php echo date("d/m/Y", strtotime($rowPrimHoyNecesito['fecha'])); ?><span class="glyphicon glyphicon-comment"></span><?php echo $rowPrimHoyNecesito['cont_comentarios'];?> <span class="glyphicon glyphicon-eye-open"></span>
 					   <?php echo $rowPrimHoyNecesito['cont_visitas'];?><a class="span_link" href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowPrimHoyNecesito['id_hoy_necesito'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
 					</p>
@@ -42,7 +42,7 @@
 							<img src="<?php echo $rowHoyNecesito['ubicacion_foto'];?>" class="img-responsive" alt="">
 						</div>
 						<div class="col-md-9 item-details">
-							<h5 class="inner two"><a class="span_link" href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><?php echo $rowHoyNecesito['titulo'];?></a></h5>
+							<h5 class="inner two"><a class="span_link" href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><?php echo utf8_encode($rowHoyNecesito['titulo']);?></a></h5>
 							 <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i><?php echo date("d/m/Y", strtotime($rowHoyNecesito['fecha']));?><span class="glyphicon glyphicon-comment"></span><?php echo $rowHoyNecesito['cont_comentarios'];?><i class="glyphicon glyphicon-eye-open"></i><?php echo $rowHoyNecesito['cont_visitas'];?><a class="span_link" href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a></div>
 						 </div>
 						<div class="clearfix"></div>
@@ -59,7 +59,7 @@
 				?>
                     <a href="selfies.php"><img src="<?php echo $rowSelfie['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
                     <h5 class="top"><a href="selfies.php">Ver Galeria de Selfies</a></h5>
-                    <p><?php echo $rowSelfie['titulo'];?></p>
+                    <p><?php echo utf8_encode($rowSelfie['titulo']);?></p>
                     <p><?php echo date("d/m/Y", strtotime($rowHoyNecesito['fecha_alta']));?>
                         <span class="glyphicon glyphicon-thumbs-up"></span><?php echo $rowSelfie['votos'];?>
                         <a class="span_link" href="single.html">
@@ -78,7 +78,7 @@
             ?>
                 <a href="humor.php"><img src="<?php echo $rowHumor['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
                 <h5 class="top"><a href="humor.php">Ver Galeria de Humor</a></h5>
-                <p><?php echo $rowHumor['titulo'];?> ...</p>
+                <p><?php echo utf8_encode($rowHumor['titulo']);?> ...</p>
                 <p><?php echo date("d/m/Y", strtotime($rowHumor['fecha_alta']));?>
                 </p>
              <?php

@@ -4,7 +4,7 @@
 	
 	$conex= new Conection($servidor,$usuario,$pass,$db );
 
-	$qryEventos="Select evento.id_evento, evento.titulo, evento.resumen, evento.fecha, count(id_comentario_evento) as cont_comentarios, evento.cont_visitas, foto_evento.ubicacion_foto From evento Left Join comentario_evento On evento.id_evento = comentario_evento.id_evento Left Join foto_evento On evento.id_evento = foto_evento.id_evento Where foto_evento.numero_foto = 1 And foto_evento.numero_foto = 1 And evento.fecha >= curdate() Group By evento.id_evento Order By evento.id_evento Desc Limit 2 ";
+	$qryEventos="Select evento.id_evento, evento.titulo, evento.resumen, evento.fecha, count(id_comentario_evento) as cont_comentarios, evento.cont_visitas, foto_evento.ubicacion_foto From evento Left Join comentario_evento On evento.id_evento = comentario_evento.id_evento Left Join foto_evento On evento.id_evento = foto_evento.id_evento Where foto_evento.numero_foto > 0 And evento.fecha >= curdate() Group By evento.id_evento Order By evento.id_evento Desc Limit 2 ";
 									
 	$qryHoyNecesito="Select hoy_necesito.id_hoy_necesito, hoy_necesito.titulo, hoy_necesito.resumen, hoy_necesito.fecha, count(id_comentario_hoy_necesito) as cont_comentarios, hoy_necesito.cont_visitas, foto_hoy_necesito.ubicacion_foto From hoy_necesito Left Join comentario_hoy_necesito On hoy_necesito.id_hoy_necesito = comentario_hoy_necesito.id_hoy_necesito Left Join foto_hoy_necesito On hoy_necesito.id_hoy_necesito = foto_hoy_necesito.id_hoy_necesito Where foto_hoy_necesito.numero_foto = 1 Group By hoy_necesito.id_hoy_necesito Desc Limit 2 ";
 									
@@ -13,9 +13,6 @@
 	$resultsEventos =$conex->consulta($qryEventos);
 	$resultsHoyNecesito = 	$conex->consulta($qryHoyNecesito);
 	$resultsCompraVenta = 	$conex->consulta($qryCompraVenta);
-/*	$resultsEventos = mysql_query($qryEventos);
-	$resultsHoyNecesito = mysql_query($qryHoyNecesito);
-	$resultsCompraVenta = mysql_query($qryCompraVenta);									*/
 ?>
 
 <div class="top-news">
@@ -29,7 +26,14 @@
 					<h5 class="top"><a href="detalleEvento.php?idEvento=<?php echo $rowEvento['id_evento'];?>"><?php echo utf8_encode($rowEvento['titulo']);?></a></h5>
 					<p><?php echo utf8_encode($rowEvento['resumen']);?>...</p>
 					<p><b>Fecha de Evento: </b><?php echo date("d/m/Y", strtotime($rowEvento['fecha']));?><br />
-                    	<span class="glyphicon glyphicon-comment"></span> <?php echo $rowEvento['cont_comentarios'];?>
+                    	<span class="glyphicon glyphicon-comment"></span> 
+						<?php 
+							$idEventop = $rowEvento['id_evento'];
+							$queryComentarios = "select count(id_comentario_evento) as cont_comentarios from comentario_evento where id_evento = $idEventop";
+							$resultsComentarios = $conex->consulta($queryComentarios); 
+							$rowComentarios = mysqli_fetch_array($resultsComentarios); 
+							echo $rowComentarios['cont_comentarios'];
+						?>
 						<span class="glyphicon glyphicon-eye-open"></span> <?php echo $rowEvento['cont_visitas'];?>
                         <a class="span_link" href="detalleEvento.php?idEvento=<?php echo $rowEvento['id_evento'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
                     </p>

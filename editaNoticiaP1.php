@@ -18,7 +18,7 @@
 		<div class="col-md-9 main">
 			<div class="gallery-section">	   
 				<div class="clearfix"> </div>
-                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Noticia <i class="glyphicon glyphicon-picture"></i></h3>
+                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Noticia <i class="glyphicon glyphicon-pencil"></i></h3>
                 	<div class="sign-up-form">
                         <div class="sign-up">
                             <table>
@@ -71,6 +71,7 @@
                                     </div>
                                     <div class="sign-up2">
                                             <input type="text" class="text" name="facebook" value="<?php echo utf8_encode($rowNoticia['url_facebook']);?>" maxlength="100">
+											<i>Deberás ingresar la ruta completa (Ejem: http://www.facebook.com)</i>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -80,6 +81,7 @@
                                     </div>
                                     <div class="sign-up2">
                                             <input type="text" class="text" name="twitter" value="<?php echo utf8_encode($rowNoticia['url_twitter']);?>" maxlength="100">
+											<i>Deberás ingresar la ruta completa (Ejem: http://www.twitter.com)</i>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>

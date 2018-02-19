@@ -4,7 +4,6 @@
 	foreach($_POST as $i => $v){
 	}
 	$conex= new Conection($servidor,$usuario,$pass,$db );
-//	$conexion = mysql_connect($servidor,$usuario,$pass);
 	if (!$conex){
 		die("Fallo la conexión a la Base de Datos: " . mysql_error());
 	}
@@ -36,33 +35,36 @@
 	$insertar=$conex->consulta("INSERT INTO galeria_fotos(id_galeria_fotos, titulo, descripcion, ubicacion_foto, fecha_alta) VALUES(".$mivar.",'".$titulo."','".$descripcion."','images/fGaleriaInicial/foto".$mivar.".".$extension."',curdate())");
 	if (!$insertar){
 		die("Fallo en la insercion de galeria en la Base de Datos.");
-	}
+	}else{
 	
-	$insertar=$conex->consulta("INSERT INTO usuario_galeria_fotos(id_usuario, id_galeria_fotos) VALUES(".$idUsuario.",".$mivar.")");
-	if (!$insertar){
-		die("Fallo en la insercion de usuario en la Base de Datos.");
-	}
-	
-	$insertar=$conex->consulta("INSERT INTO usuario_votos_galeria_fotos(id_usuario, id_galeria_fotos) VALUES(".$idUsuario.",".$mivar.")",$conex);
-	if (!$insertar){
-		die("Fallo en la insercion de voto en la Base de Datos.");
-	}
-	
-	#Envío de E-mail
-	$email_to = "autostimeya@gmail.com";
-	$email_subject = "Galeria Inicial en AutosTime";
+		$insertar=$conex->consulta("INSERT INTO usuario_galeria_fotos(id_usuario, id_galeria_fotos) VALUES(".$idUsuario.",".$mivar.")");
+		if (!$insertar){
+			die("Fallo en la insercion de usuario en la Base de Datos.");
+		}else{
+			
+			$insertar=$conex->consulta("INSERT INTO usuario_votos_galeria_fotos(id_usuario, id_galeria_fotos) VALUES(".$idUsuario.",".$mivar.")",$conex);
+			if (!$insertar){
+				die("Fallo en la insercion de voto en la Base de Datos.");
+			}else{
+				#Envío de E-mail
+				$email_to = "autostimeya@gmail.com";
+				$email_subject = "Galeria Inicial en AutosTime";
 
-	//Cuerpo del mensaje
-	$email_message = "Nueva galeria recibida:\n\n";
-	$email_message .= "\n\n Titulo: ".$titulo;
-	$email_message .= "\n\n Descripción: ".$descripcion;
-	$email_message .= "\n\n\n\n Ver Selfie: http://autostime.esy.es/galeria.php";
+				//Cuerpo del mensaje
+				$email_message = "Nueva galeria recibida:\n\n";
+				$email_message .= "\n\n Titulo: ".$titulo;
+				$email_message .= "\n\n Descripción: ".$descripcion;
+				$email_message .= "\n\n\n\n Ver Selfie: http://autostime.esy.es/galeria.php";
+				
+				// Ahora se envía el e-mail usando la función mail() de PHP
+				$headers = 'From: '.$email_to."\r\n".
+				'Reply-To: '.$email_to."\r\n" .
+				'X-Mailer: PHP/' . phpversion();
+				@mail($email_to, $email_subject, $email_message, $headers);
+			}
+		}
+	}
 	
-	// Ahora se envía el e-mail usando la función mail() de PHP
-	$headers = 'From: '.$email_to."\r\n".
-	'Reply-To: '.$email_to."\r\n" .
-	'X-Mailer: PHP/' . phpversion();
-	@mail($email_to, $email_subject, $email_message, $headers);
 ?>
 <form action="galeria.php" method="post"  class="contact_form" enctype="multipart/form-data" id="galeria" name="galeria">
     <table align="center">

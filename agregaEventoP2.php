@@ -164,10 +164,9 @@
                             ?>
                                  <div class="col-md-4 cate-grid grid">
                                     <figure>
-                                        <img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
-                                        <figcaption>
-                                            <a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-                                        </figcaption>
+										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="<?php echo utf8_encode($titulo); ?>">
+											<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
+                                        </a>
                                     </figure>
                                  </div>
                             <?php

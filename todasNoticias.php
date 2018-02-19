@@ -1,15 +1,12 @@
 <?php
 	require_once("conexion/require_once.php");
 	$conex= new Conection($servidor,$usuario,$pass,$db );
-	$qryNoticias="Select noticia.id_noticia, noticia.titulo, noticia.resumen, noticia.fecha, count(id_comentario_noticia) as cont_comentarios, noticia.cont_visitas, foto_noticia.ubicacion_foto From noticia left Join comentario_noticia on noticia.id_noticia = comentario_noticia.id_noticia left Join foto_noticia on noticia.id_noticia = foto_noticia.id_noticia where foto_noticia.numero_foto > 0 group by noticia.id_noticia Order By noticia.id_noticia Desc Limit 0,10 ";
+	$qryNoticias="Select noticia.id_noticia, noticia.titulo, noticia.resumen, noticia.fecha, noticia.cont_visitas, foto_noticia.ubicacion_foto From noticia left Join comentario_noticia on noticia.id_noticia = comentario_noticia.id_noticia left Join foto_noticia on noticia.id_noticia = foto_noticia.id_noticia where foto_noticia.numero_foto > 0 group by noticia.id_noticia Order By noticia.id_noticia Desc Limit 0,10 ";
 	$queryContador = "select count(noticia.id_noticia) as total From noticia";
-
+	
 	$resultsNoticias =$conex->consulta($qryNoticias);
 	$resultsContador =$conex->consulta($queryContador);
-
-	/*$conex->consulta($qryNoticias);
-	$resultsNoticias = mysql_query($qryNoticias);
-	$resultsContador = mysql_query($queryContador);*/
+	
 	while($row = mysqli_fetch_array($resultsContador)){
 			$nbr = $row['total'];		
 	}
@@ -39,7 +36,14 @@
                             <h5 class="top"><a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><?php echo utf8_encode($rowNoticias['titulo']);?></a></h5>
                             <a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><img src="<?php echo $rowNoticias['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
                             <p><?php echo utf8_encode($rowNoticias['resumen']);?>...</p>
-                            <p><b>Fecha de Publicación: </b> <?php echo date("d/m/Y", strtotime($rowNoticias['fecha']));?><br /> <span class="glyphicon glyphicon-comment"></span> <?php echo $rowNoticias['cont_comentarios'];?> <i class="glyphicon glyphicon-eye-open"></i> <?php echo $rowNoticias['cont_visitas'];?> <a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"> <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+                            <p><b>Fecha de Publicación: </b> <?php echo date("d/m/Y", strtotime($rowNoticias['fecha']));?><br /> <span class="glyphicon glyphicon-comment"></span> 
+							<?php 
+								$idNoticiap = $rowNoticias['id_noticia'];
+								$queryComentarios = "select count(id_comentario_noticia) as cont_comentarios from comentario_noticia where id_noticia = $idNoticiap";
+								$resultsComentarios = $conex->consulta($queryComentarios); 
+								$rowComentarios = mysqli_fetch_array($resultsComentarios); 
+								echo $rowComentarios['cont_comentarios'];
+							?> <i class="glyphicon glyphicon-eye-open"></i> <?php echo $rowNoticias['cont_visitas'];?> <a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"> <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
                             </p>
                         </div>
                     </div>

@@ -11,19 +11,13 @@
 	$conex->consulta($qryContVisitas);
 
 	$qryNoticia="SELECT noticia.id_noticia, noticia.titulo, noticia.resumen, noticia.descripcion, noticia.fecha, COUNT(id_comentario_noticia) AS cont_comentarios, noticia.cont_visitas, noticia.url_facebook, noticia.url_twitter FROM noticia LEFT JOIN comentario_noticia ON noticia.id_noticia = comentario_noticia.id_noticia WHERE noticia.id_noticia = $idNoticia";
-	
 	$qryPrimFoto="SELECT noticia.titulo, foto_noticia.ubicacion_foto FROM noticia LEFT JOIN foto_noticia ON noticia.id_noticia = foto_noticia.id_noticia WHERE noticia.id_noticia = $idNoticia Limit 1";
-	
 	$qryComentarios="Select comentario_noticia.titulo, comentario_noticia.descripcion, comentario_noticia.fecha, usuario.ubicacion_foto, usuario.apodo From comentario_noticia Inner Join usuario On comentario_noticia.id_usuario = usuario.id_usuario Where id_noticia = $idNoticia Order by id_comentario_noticia Asc";
-	
 	$qryGaleria="SELECT noticia.id_noticia, foto_noticia.ubicacion_foto FROM noticia LEFT JOIN foto_noticia ON noticia.id_noticia = foto_noticia.id_noticia WHERE noticia.id_noticia = $idNoticia";
 
 	$resultNoticia = $conex->consulta($qryNoticia);
 	$resultComentarios = $conex->consulta($qryComentarios);
-	//$resultPrimFoto = $conex->consulta($qryPrimFoto);
 	$resultsGaleria = $conex->consulta($qryGaleria);
-	//$con=$conex->conectar_base_datos();
-//	$resultPrimFoto=mysqli_query($con,$qryPrimFoto);
 	$resultPrimFoto=$conex->consulta($qryPrimFoto);
 
 	include("cabeza.php");
@@ -35,6 +29,7 @@
 		<div class="banner-section">
 	        <?php
 				while($rowPrimFoto = mysqli_fetch_array($resultPrimFoto)){
+				$titulo = utf8_encode($rowPrimFoto['titulo']);
 			?>
                <h3 class="title"><?php echo utf8_encode($rowPrimFoto['titulo']);?> <i class="glyphicon glyphicon-bullhorn"></i></h3>
 			   
@@ -42,7 +37,7 @@
 				if(isset($_SESSION['id_tipo_usuario'])){
 					if ($_SESSION["id_tipo_usuario"] == 1){ ?>
                     	<br />
-						<h5><center><a href="editaNoticiaP1.php?idNoticia=<?php echo $idNoticia ?>"><b><i><u>Editar esta noticia</u></i></b></a></center></h5>
+						<h5><center><a href="editaNoticiaP1.php?idNoticia=<?php echo $idNoticia ?>"><b><i><u>Editar Esta Noticia</u></i></b></a></center></h5>
 				<?php
 					}
 				}
@@ -63,20 +58,27 @@
                             </p>
                     </div>
                 </div>
-			
+				<?php 
+					if(!empty($rowNoticia['url_facebook']) || !empty($rowNoticia['url_twitter'])){
+				?>
                 <div class="single-bottom">
                     <div class="single-middle">
                         <ul class="social-share">
-                            <li><span>Redes Sociales de la noticia: </span></li>
+                            <li><span>Redes sociales de la noticia: </span></li>
                             <li></li>
-                            <li><a href="<?php echo $rowNoticia['url_facebook'];?>" target="_blank"><i> </i></a></li>
-                            <li><a href="<?php echo $rowNoticia['url_twitter'];?>" target="_blank"><i class="tin"> </i></a></li>
+							
+							<?php if(!empty($rowNoticia['url_facebook'])){ ?>
+								<li><a href="<?php echo $rowNoticia['url_facebook'];?>" target="_blank"><i> </i></a></li>
+							<?php } if(!empty($rowNoticia['url_twitter'])){ ?>
+								<li><a href="<?php echo $rowNoticia['url_twitter'];?>" target="_blank"><i class="tin"> </i></a></li>
+							<?php } ?>
                         </ul>
                         <i class="arrow"> </i>
                         <div class="clearfix"> </div>
                    </div>
-                </div>			
+                </div>
 			 <?php
+					}
 				}
 			?>	
              <div class="gallery-section">
@@ -88,12 +90,9 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
-									
-									
-									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="<?php echo $titulo; ?>">
 									<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
 									</a>
-									
 								</figure>
 							 </div>
 						<?php
@@ -113,14 +112,14 @@
                 <div class="single-bottom">
                     <div class="single-middle">
                         <div class="media-left response-text-left">
-                                <img width="80px" height="80px" class="media-object" src="<?php echo $rowComentario['ubicacion_foto'];?>" alt=""/>
+                            <img width="80px" height="80px" class="media-object" src="<?php echo $rowComentario['ubicacion_foto'];?>" alt=""/>
                             <h5><?php echo utf8_encode($rowComentario['apodo']);?></h5>
                         </div>
                         <div class="media-body response-text-right">
                             <p><h5><?php echo utf8_encode($rowComentario['titulo']);?></h5></p>
                             <p><?php echo utf8_encode($rowComentario['descripcion']);?></p>
                             <ul>
-                                <li><?php echo date("d/m/Y h:m:s", strtotime($rowComentario['fecha']));?></li>
+                                <li><?php echo date("d/m/Y g:i:s A", strtotime($rowComentario['fecha']));?></li>
                             </ul>
                         </div>
                         <div class="clearfix"> </div>

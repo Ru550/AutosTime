@@ -24,8 +24,8 @@
 					while($rowPrimNoticia = mysqli_fetch_array($resultsPrimNoticia)){
 				?>
 					<a href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><img src="<?php echo $rowPrimNoticia['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
-					<h5 class="top"><a href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><?php echo $rowPrimNoticia['titulo'];?></a></h5>
-					<p><?php echo $rowPrimNoticia['resumen'];?> ...</p>
+					<h5 class="top"><a href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"><?php echo utf8_encode($rowPrimNoticia['titulo']);?></a></h5>
+					<p><?php echo utf8_encode($rowPrimNoticia['resumen']);?> ...</p>
 					<p><?php echo date("d/m/Y", strtotime($rowPrimNoticia['fecha'])); ?> <span class="glyphicon glyphicon-comment"> </span><?php echo $rowPrimNoticia['cont_comentarios'];?> <span class="glyphicon glyphicon-eye-open"></span>
 					   <?php echo $rowPrimNoticia['cont_visitas'];?><a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowPrimNoticia['id_noticia'];?>"> <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
 					</p>
@@ -42,7 +42,7 @@
 							<img src="<?php echo $rowNoticias['ubicacion_foto'];?>" class="img-responsive" alt="">
 						</div>
 						<div class="col-md-9 item-details">
-							<h5 class="inner two"><a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><?php echo $rowNoticias['titulo'];?></a></h5>
+							<h5 class="inner two"><a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"><?php echo utf8_encode($rowNoticias['titulo']);?></a></h5>
 							 <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i> <?php echo date("d/m/Y", strtotime($rowNoticias['fecha']));?> <span class="glyphicon glyphicon-comment"></span> <?php echo $rowNoticias['cont_comentarios'];?> <i class="glyphicon glyphicon-eye-open"></i> <?php echo $rowNoticias['cont_visitas'];?> <a class="span_link" href="detalleNoticia.php?idNoticia=<?php echo $rowNoticias['id_noticia'];?>"> <span class="glyphicon glyphicon-circle-arrow-right"></span></a></div>
 						 </div>
 						<div class="clearfix"></div>
@@ -59,10 +59,10 @@
 				?>
                     <a href="selfies.php"><img src="<?php echo $rowSelfie['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
                     <h5 class="top"><a href="selfies.php">Ver Galeria de Selfies</a></h5>
-                    <p><?php echo $rowSelfie['titulo'];?></p>
-                    <p><?php echo date("d/m/Y", strtotime($rowNoticias['fecha_alta']));?>
+                    <p><?php echo utf8_encode($rowSelfie['titulo']);?></p>
+                    <p><?php echo date("d/m/Y", strtotime($rowSelfie['fecha_alta']));?>
                         <span class="glyphicon glyphicon-thumbs-up"></span><?php echo $rowSelfie['votos'];?>
-                        <a class="span_link" href="single.html">
+                        <a class="span_link" href="selfies.php">
                         <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
                     </p>
                 <?php
@@ -78,7 +78,7 @@
 				?>
                     <a href="humor.php"><img src="<?php echo $rowHumor['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
                     <h5 class="top"><a href="humor.php">Ver Galeria de Humor</a></h5>
-                    <p><?php echo $rowHumor['titulo'];?> ...</p>
+                    <p><?php echo utf8_encode($rowHumor['titulo']);?> ...</p>
                     <p><?php echo date("d/m/Y", strtotime($rowHumor['fecha_alta']));?>
                     </p>
                  <?php

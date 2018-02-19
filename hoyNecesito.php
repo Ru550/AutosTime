@@ -2,7 +2,7 @@
 	require_once("conexion/require_once.php");
 	$queHacer = "Hoy Necesito";
 	$conex= new Conection($servidor,$usuario,$pass,$db );
-	$queryGaleria="Select hoy_necesito.id_hoy_necesito, hoy_necesito.titulo, hoy_necesito.resumen, hoy_necesito.fecha, count(id_comentario_hoy_necesito) as cont_comentarios, hoy_necesito.cont_visitas, foto_hoy_necesito.ubicacion_foto From hoy_necesito Left Join comentario_hoy_necesito On hoy_necesito.id_hoy_necesito = comentario_hoy_necesito.id_hoy_necesito Left Join foto_hoy_necesito On hoy_necesito.id_hoy_necesito = foto_hoy_necesito.id_hoy_necesito Where foto_hoy_necesito.numero_foto > 0 Group By hoy_necesito.id_hoy_necesito Desc Limit 0,10";
+	$queryGaleria="Select hoy_necesito.id_hoy_necesito, hoy_necesito.titulo, hoy_necesito.resumen, hoy_necesito.fecha, hoy_necesito.cont_visitas, foto_hoy_necesito.ubicacion_foto From hoy_necesito Left Join comentario_hoy_necesito On hoy_necesito.id_hoy_necesito = comentario_hoy_necesito.id_hoy_necesito Left Join foto_hoy_necesito On hoy_necesito.id_hoy_necesito = foto_hoy_necesito.id_hoy_necesito Where foto_hoy_necesito.numero_foto > 0 Group By hoy_necesito.id_hoy_necesito Desc Limit 0,10";
 	$queryContador = "select count(id_hoy_necesito) as total From hoy_necesito";
 
 	$resultsGaleria =$conex->consulta($queryGaleria);
@@ -18,10 +18,11 @@
 		<?php include("redesSociales.php"); ?>
 		<div class="col-md-9 main">
 			<div class="gallery-section">
-				<h3 class="tittle">Zona HOY NECESITO <i class="glyphicon glyphicon-picture"></i></h3>
+				<h3 class="tittle">Zona HOY NECESITO <i class="glyphicon glyphicon-list-alt"></i></h3>
 				 <div class="banner">
                     <h5 class="top" align="center">Esta zona cuenta con servicios promocionados por ustedes mismos.</h5>
                     <h5 class="top" align="center">AutosTime no se hace responsable de ninguno.</h5>
+					<br />
                 </div>
                 <?php
 				if(!isset($_SESSION["id_usuario"])):
@@ -36,11 +37,18 @@
                     ?>
                          <div class="col-md-4 top-text">
                             <div class="single-middle">
-                            	<h5 class="top"><a href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><?php echo $rowHoyNecesito['titulo'];?></a></h5>
+                            	<h5 class="top"><a href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><?php echo utf8_encode($rowHoyNecesito['titulo']);?></a></h5>
                                 <a href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><img src="<?php echo $rowHoyNecesito['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
-                                <p><?php echo $rowHoyNecesito['resumen'];?>...</p>
+                                <p><?php echo utf8_encode($rowHoyNecesito['resumen']);?>...</p>
                                 <p><b>Fecha Publicación: </b><?php echo date("d/m/Y", strtotime($rowHoyNecesito['fecha']));?><br />
-                                    <span class="glyphicon glyphicon-comment"></span> <?php echo $rowHoyNecesito['cont_comentarios'];?>
+                                    <span class="glyphicon glyphicon-comment"></span> 
+									<?php 
+										$idHoyNecesitop = $rowHoyNecesito['id_hoy_necesito'];
+										$queryComentarios = "select count(id_comentario_hoy_necesito) as cont_comentarios from comentario_hoy_necesito where id_hoy_necesito = $idHoyNecesitop";
+										$resultsComentarios = $conex->consulta($queryComentarios); 
+										$rowComentarios = mysqli_fetch_array($resultsComentarios); 
+										echo $rowComentarios['cont_comentarios'];
+									?>
                                     <span class="glyphicon glyphicon-eye-open"></span> <?php echo $rowHoyNecesito['cont_visitas'];?>
                                     <a class="span_link" href="detalleHoyNecesito.php?idHoyNecesito=<?php echo $rowHoyNecesito['id_hoy_necesito'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
                                 </p>

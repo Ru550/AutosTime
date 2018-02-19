@@ -6,7 +6,7 @@
 	
 	$qryCompraVenta="SELECT compra_venta.id_compra_venta, compra_venta.titulo, compra_venta.resumen, compra_venta.descripcion, compra_venta.marca, compra_venta.modelo, compra_venta.transmision, compra_venta.tipo_combustible, compra_venta.precio, compra_venta.kilometraje, compra_venta.fecha, COUNT(id_comentario_compra_venta) AS cont_comentarios, compra_venta.cont_visitas, compra_venta.url_facebook, compra_venta.url_twitter FROM compra_venta LEFT JOIN comentario_compra_venta ON compra_venta.id_compra_venta = comentario_compra_venta.id_compra_venta WHERE compra_venta.id_compra_venta = $idCompraVenta";
 	
-	$resultCompraVenta = mysql_query($qryCompraVenta);
+	$resultCompraVenta = $conex->consulta($qryCompraVenta);
 		
 	include("cabeza.php");
 	include("menu.php");
@@ -19,7 +19,7 @@
 		<div class="col-md-9 main">
 			<div class="gallery-section">	   
 				<div class="clearfix"> </div>
-                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Compra/Venta <i class="glyphicon glyphicon-picture"></i></h3>
+                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Compra/Venta <i class="glyphicon glyphicon-pencil"></i></h3>
                 	<div class="sign-up-form">
                         <div class="sign-up">
                             <table>
@@ -37,7 +37,7 @@
                             <br />
                             <form action="editaCompraVentaP2.php" method="post" enctype="multipart/form-data" name="evento">
                             <?php	
-                                while($rowEvento = mysql_fetch_assoc($resultCompraVenta)){
+                                while($rowEvento = mysqli_fetch_array($resultCompraVenta)){
                             ?>    
                                 <div class="sign-u">
                                     <div class="sign-up1">
@@ -126,6 +126,7 @@
                                     </div>
                                     <div class="sign-up2">
                                             <input type="text" class="text" name="facebook" value="<?php echo utf8_encode($rowEvento['url_facebook']);?>" maxlength="100">
+											<i>Deberás ingresar la ruta completa (Ejem: http://www.facebook.com)</i>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -135,6 +136,7 @@
                                     </div>
                                     <div class="sign-up2">
                                             <input type="text" class="text" name="twitter" value="<?php echo utf8_encode($rowEvento['url_twitter']);?>"  maxlength="100">
+											<i>Deberás ingresar la ruta completa (Ejem: http://www.twitter.com)</i>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>

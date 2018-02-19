@@ -33,7 +33,7 @@
                             <table align="left">
                                 <tr>
                                     <td align="center" colspan="2">
-                                        <h5 class="top" align="center">Quieres ser parte de esta galería!</h5>
+                                        <h5 class="top" align="center">Tú también puedes ser parte de esta galería!</h5>
                                         <h5 class="top" align="center">Agrega tu selfie dentro de tu auto.</h5>
                                         <h5 class="top" align="center">Recuerda siempre tener tu auto COMPLETAMENTE DETENIDO.</h5>
                                         <br />
@@ -69,7 +69,7 @@
                                     <td align="right" colspan="2">
                             			<div class="sign-up" align="left">
                                             <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id_usuario"]; ?>">
-				                            <input type="submit" value=" Enviar Selfie " />
+				                            <input type="submit" value="Enviar" />
                 			            </div>
                             		</td>
                             	</tr>
@@ -85,19 +85,21 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
-									<img src="<?php echo $row['ubicacion_foto'];?>" height="260" width="412" alt="">
-									<figcaption>
-										<h3><?php echo $row['titulo'];?></h3>
-										<span><?php echo $row['descripcion'];?></span>
-										<span>Votos: <?php echo $row['cont_votos'];?></span>
-										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-                                       <?php if(isset($_SESSION['id_tipo_usuario'])){
-												 if ($_SESSION["id_tipo_usuario"] == 1){ ?>
-													<a href="eliminarSelfie.php?idSelfie=<?php echo $row['id_selfie']; ?>" >Eliminar</a>
-										<?php 	 } ?>
-												 <a href="votarSelfie.php?idSelfie=<?php echo $row['id_selfie']; ?>" >Votar</a>
-										<?php }?>
-									</figcaption>
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Selfie's">
+										<img src="<?php echo $row['ubicacion_foto'];?>" height="260" width="412" alt="">
+									</a>
+									<h3><?php echo utf8_encode($row['titulo']);?></h3>
+									<span><?php echo utf8_encode($row['descripcion']);?></span>
+									<br />
+									<h5> <center><i>
+									<span class="glyphicon glyphicon-check"></span>Votos: <?php echo $row['cont_votos'];?></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								   <?php if(isset($_SESSION['id_tipo_usuario'])){
+											 if ($_SESSION["id_tipo_usuario"] == 1){ ?>
+												<a href="eliminarSelfie.php?idSelfie=<?php echo $row['id_selfie']; ?>" ><span class="glyphicon glyphicon-remove"></span><u>Eliminar</u></a>
+									<?php 	 } ?>
+											 <a href="votarSelfie.php?idSelfie=<?php echo $row['id_selfie']; ?>" ><span class="glyphicon glyphicon-thumbs-up"></span><u>Votar</u></a>
+									<?php }?></center>
+									</h5>
 								</figure>
 							 </div>
 						<?php

@@ -49,7 +49,7 @@
 		<div class="col-md-9 main">
 			<div class="gallery-section">	   
 				<div class="clearfix"> </div>
-                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Galeria <i class="glyphicon glyphicon-picture"></i></h3>
+                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Galeria <i class="glyphicon glyphicon-pencil"></i></h3>
                 <div >
                 	<table>
                     	<tr>
@@ -157,10 +157,10 @@
                             ?>
                                  <div class="col-md-4 cate-grid grid">
                                     <figure>
+										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="<?php echo utf8_encode($titulo); ?>">
                                         <img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
-                                        <figcaption>
-                                            <a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-                                            <a href="eliminarFotoEvento.php?idEvento=<?php echo $idEvento ?>&idFotoEvento=<?php echo $row['id_foto_evento']; ?>" >Eliminar</a>
+                                        </a>
+                                            <h5><center><a href="eliminarFotoEvento.php?idEvento=<?php echo $idEvento ?>&idFotoEvento=<?php echo $row['id_foto_evento']; ?>" ><span class="glyphicon glyphicon-remove"></span>Eliminar</a></center></h5>
                                         </figcaption>
                                     </figure>
                                  </div>

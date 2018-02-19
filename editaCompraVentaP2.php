@@ -67,7 +67,7 @@
 		<div class="col-md-9 main">
 			<div class="gallery-section">	   
 				<div class="clearfix"> </div>
-                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Galeria <i class="glyphicon glyphicon-picture"></i></h3>
+                <h3 class="tittle"><?php echo $_SESSION['apodo']; ?>!&nbsp&nbsp&nbsp Edita tu Galeria <i class="glyphicon glyphicon-pencil"></i></h3>
                 <div >
                 	<table>
                     	<tr>
@@ -175,11 +175,10 @@
                             ?>
                                  <div class="col-md-4 cate-grid grid">
                                     <figure>
-                                        <img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
-                                        <figcaption>
-                                            <a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-                                            <a href="eliminarFotoCompraVenta.php?idCompraVenta=<?php echo $idCompraVenta ?>&idFotoCompraVenta=<?php echo $row['id_foto_compra_venta']; ?>" >Eliminar</a>
-                                        </figcaption>
+										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">
+											<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
+                                        </a>
+                                           <h5><center><a href="eliminarFotoCompraVenta.php?idCompraVenta=<?php echo $idCompraVenta ?>&idFotoCompraVenta=<?php echo $row['id_foto_compra_venta']; ?>" ><span class="glyphicon glyphicon-remove"></span>Eliminar</a></center></h5>
                                     </figure>
                                  </div>
                             <?php

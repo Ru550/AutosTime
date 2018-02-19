@@ -38,12 +38,12 @@
             <li>
 				<script type="text/javascript" src="//ra.revolvermaps.com/0/0/1.js?i=0jj8sa7js3n&amp;s=180&amp;m=0&amp;v=true&amp;r=false&amp;b=000000&amp;n=false&amp;c=ff0000" async="async"></script>
             </li>
-            <br />
+            <!--<br />
         	<li>
             	<a href="musica.php" target="_blank">
                     <img src="images/imgGenerales/Bocinas.gif" alt="">
                 <br /> Escucha nuestra Musica</a>
-            </li>
+            </li>-->
 		</ul>
 	</div>
 </div>

@@ -37,14 +37,14 @@
 	}
 	
 	#Carga a la Base de Datos
-	$insertar = $conex->consulta("INSERT INTO usuario_selfie (id_usuario, id_selfie) VALUES (".$idUsuario.",".$mivar.")");
+	$insertar = $conex->consulta("INSERT INTO usuario_selfie (id_usuario, id_selfie) VALUES (".$idUsuario.",".$mivar.")",$conex);
 	if (!$insertar){
-		die("Fallo en la insercion de registro en la Base de Datos: ".mysql_error());
+		die("Fallo en la insercion de registro del usuario en la Base de Datos: ".mysql_error());
 	}
 	
 	$insertar = $conex->consulta("INSERT INTO usuario_votos_selfie (id_usuario, id_selfie) VALUES(".$idUsuario.",".$mivar.")",$conex);
 	if (!$insertar){
-		die("Fallo en la insercion de registro en la Base de Datos: ".mysql_error());
+		die("Fallo en la insercion de registro para los votos en la Base de Datos: ".mysql_error());
 	} 
 	
 	#Envío de E-mail
@@ -55,7 +55,7 @@
 	$email_message = "Nueva selfie recibida:\n\n";
 	$email_message .= "\n\n Titulo: ".$titulo;
 	$email_message .= "\n\n Descripción: ".$descripcion;
-	$email_message .= "\n\n\n\n Ver Selfie: http://autostime.esy.es/selfies.php";
+	$email_message .= "\n\n\n\n Ver mas Selfie's: http://autostime.esy.es/selfies.php";
 	
 	// Ahora se envía el e-mail usando la función mail() de PHP
 	$headers = 'From: '.$email_to."\r\n".

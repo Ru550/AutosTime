@@ -27,7 +27,7 @@
                         <p class="your-para"></p>
 						<p class="your-para">Comentario :</p>
 							<textarea cols="77" rows="6" name="descripcion" required="required"></textarea>
-                            <div class="in-right">
+                            <div>
 								<input type="submit" value="Enviar " class="trig">
                             </div>
 						</form>
@@ -41,10 +41,10 @@
 					Realmente agradecemos tus comentarios.</p>
 					<br>
 					<p>Siguenos en nuestras redes sociales</p>
-						 <ul class=" side-icons con">
+						<ul class=" side-icons con">
 							<li><a class="fb" href="https://www.facebook.com/AutosTimeYa" target="_blank"></a></li>
-							<li><a class="goog" href="https://twitter.com/AutosTimeYa" target="_blank""></a></li>
-					   </ul>
+							<li><a class="goog" href="https://twitter.com/AutosTimeYa" target="_blank"></a></li>
+					    </ul>
 				</div>
 				<div class="clearfix"> </div> 
 			</div>

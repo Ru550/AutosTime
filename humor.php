@@ -7,8 +7,6 @@
 
 	$resultsGaleria =$conex->consulta($queryGaleria);
 	$resultsContador =$conex->consulta($queryContador);
-/*	$resultsGaleria = mysql_query($queryGaleria);
-	$resultsContador = mysql_query($queryContador);*/
 	
 	while($row = mysqli_fetch_array($resultsContador)){
 			$nbr = $row['total'];		
@@ -28,8 +26,8 @@
    		            include("iniSesionRegistra.php");
             	else:
 	            ?>
-                <form action="enviarHumor.php" method="post"  class="contact_form" enctype="multipart/form-data" name="selfie">
-                	<table align="left" >
+                <form action="enviarHumor.php" method="post" class="contact_form" enctype="multipart/form-data" name="selfie">
+                	<table align="left"> 
                     	<tr>
                         	<td align="center" colspan="2">
                             	<h5 class="top" align="center">Tienes imágenes que pueden ser parte de esta galería.</h5>
@@ -42,7 +40,7 @@
                             </tr>
                             <tr>
                                 <td align="right">
-                                    Titulo:
+                                    Título:
                                 </td>
                                 <td align="left">
                                     <input type="text" class="text" name="titulo"  maxlength="10" required="required" />
@@ -66,12 +64,14 @@
                                     <input type="file" name="imagen" id="imagen" required="required"/> 
                                 </td>
                             </tr>
-                            <td align="right" colspan="2">
-                                <div class="sign-up" align="left">
-                                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id_usuario"]; ?>">
-                                    <input type="submit" value=" Enviar Imagen " />
-                                </div>
-                            </td>
+							<tr>
+								<td align="left" colspan="2">
+									<div class="sign-up" align="left">
+										<input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id_usuario"]; ?>">
+										<input type="submit" value="Enviar" />
+									</div>
+								</td>
+							</tr>
                         </tr>
                     </table>
                 </form>
@@ -84,16 +84,17 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
-									<img src="<?php echo $row['ubicacion_foto'];?>" height="260" width="412" alt="">
-									<figcaption>
-										<h3><?php echo $row['titulo'];?></h3>
-										<span><?php echo $row['descripcion'];?></span>
-										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">
+										<img src="<?php echo $row['ubicacion_foto'];?>" height="260" width="412" alt="">
+									</a>
+										<h3><?php echo utf8_encode($row['titulo']);?></h3>
+										<span><?php echo utf8_encode($row['descripcion']);?></span>
+										<br />
                                         <?php if(isset($_SESSION['id_tipo_usuario'])){
 												 if ($_SESSION["id_tipo_usuario"] == 1){ ?>
-			                                        <a href="eliminarHumor.php?idHumor=<?php echo $row['id_humor']; ?>" >Eliminar</a>
+			                                        <a href="eliminarHumor.php?idHumor=<?php echo $row['id_humor']; ?>" >
+													<h5><center><span class="glyphicon glyphicon-remove"></span> <u>Eliminar Imagen</u></a></center><h5>
                                         <?php } } ?>
-									</figcaption>
 								</figure>
 							 </div>
 						<?php

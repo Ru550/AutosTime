@@ -88,6 +88,7 @@
                                     </div>
                                     <div class="sign-up2">
                                             <input type="text" class="text" name="facebook" maxlength="100">
+											<i>Deberás ingresar la ruta completa (Ejem: http://www.facebook.com)</i>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -97,6 +98,7 @@
                                     </div>
                                     <div class="sign-up2">
                                             <input type="text" class="text" name="twitter" maxlength="100">
+											<i>Deberás ingresar la ruta completa (Ejem: http://www.twitter.com)</i>
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>

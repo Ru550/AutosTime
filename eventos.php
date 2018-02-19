@@ -19,12 +19,12 @@
 		<div class="col-md-9 main">
 			<div class="gallery-section">	   
 				<div class="clearfix"> </div>
-                <h3 class="tittle">Zona de Eventos <i class="glyphicon glyphicon-picture"></i></h3>
+                <h3 class="tittle">Zona de Eventos <i class="glyphicon glyphicon-time"></i></h3>
                 <div class="banner">
                     <h5 class="top" align="center">Esta zona cuenta con los eventos promocionados por ustedes mismos.</h5>
                     <h5 class="top" align="center">Solo se muestran los eventos cuya fecha no ha vencido.</h5>
                     <h5 class="top" align="center">AutosTime no se hace responsable de ninguno.</h5>
-                </div>                
+                </div><br />
                 <?php
 				if(!isset($_SESSION["id_usuario"])):
    		            include("iniSesionRegistra.php");
@@ -43,7 +43,14 @@
                             	<img width="50" height="50" src="<?php echo $rowEvento['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
                             <p><?php echo utf8_encode($rowEvento['resumen']);?>...</p>
                             <p><b>Fecha de Evento: </b><?php echo date("d/m/Y", strtotime($rowEvento['fecha']));?><br />
-                                <span class="glyphicon glyphicon-comment"></span><?php echo utf8_encode($rowEvento['cont_comentarios']);?>
+                                <span class="glyphicon glyphicon-comment"></span>
+								<?php 
+									$idEventop = $rowEvento['id_evento'];
+									$queryComentarios = "select count(id_comentario_evento) as cont_comentarios from comentario_evento where id_evento = $idEventop";
+									$resultsComentarios = $conex->consulta($queryComentarios); 
+									$rowComentarios = mysqli_fetch_array($resultsComentarios); 
+									echo $rowComentarios['cont_comentarios'];
+								?>
                                 <span class="glyphicon glyphicon-eye-open"></span><?php echo $rowEvento['cont_visitas'];?>
                                 <a class="span_link" href="detalleEvento.php?idEvento=<?php echo $rowEvento['id_evento'];?>">
                                 <span class="glyphicon glyphicon-circle-arrow-right"></span></a>

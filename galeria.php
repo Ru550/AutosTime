@@ -5,8 +5,6 @@
 	$queryGaleria="select galeria_fotos.id_galeria_fotos, galeria_fotos.titulo, galeria_fotos.descripcion, galeria_fotos.ubicacion_foto, count(usuario_votos_galeria_fotos.id_galeria_fotos) as cont_votos From galeria_fotos Left Join usuario_votos_galeria_fotos On galeria_fotos.id_galeria_fotos = usuario_votos_galeria_fotos.id_galeria_fotos where galeria_fotos.fecha_alta between LAST_DAY(curdate() - INTERVAL 1 MONTH) + INTERVAL 1 DAY and LAST_DAY(curdate()) Group By usuario_votos_galeria_fotos.id_galeria_fotos Order By galeria_fotos.fecha_alta Desc Limit 0,10";
 	$queryContador = "select count(galeria_fotos.id_galeria_fotos) as total From galeria_fotos Join usuario_votos_galeria_fotos On galeria_fotos.id_galeria_fotos = usuario_votos_galeria_fotos.id_galeria_fotos where galeria_fotos.fecha_alta between LAST_DAY(curdate() - INTERVAL 1 MONTH) + INTERVAL 1 DAY and LAST_DAY(curdate()) Group By usuario_votos_galeria_fotos.id_galeria_fotos ";
 
-/*	$resultsGaleria = mysql_query($queryGaleria);
-	$resultsContador = mysql_query($queryContador);*/
 	$resultsGaleria =$conex->consulta($queryGaleria);
 	$resultsContador =$conex->consulta($queryContador);
 	
@@ -21,7 +19,7 @@
 		<?php include("redesSociales.php"); ?>
 		<div class="col-md-9 main">
 			<div class="gallery-section">
-				<h3 class="tittle">Galeria <i class="glyphicon glyphicon-fullscreen"></i></h3>
+				<h3 class="tittle">Galeria <i class="glyphicon glyphicon-camera"></i></h3>
                 <?php
 				if(!isset($_SESSION["id_usuario"])):
    		            include("iniSesionRegistra.php");
@@ -32,7 +30,8 @@
                     	<tr>
                         	<td align="center" colspan="2">
                             	<h5 class="top" align="center">Quieres participar en esta Galería.</h5>
-				                <h5 class="top" align="center">Agrega tu imágen. La única regla es que debe contener algún auto.</h5>
+				                <h5 class="top" align="center">Agrega tu imágen.</h5>
+								<h5 class="top" align="center">La única regla es que debe contener algún auto.</h5>
                             </td>
                             <tr>
                                 <td colspan="2">
@@ -68,7 +67,7 @@
                             <td align="right" colspan="2">
                                 <div class="sign-up" align="left">
                                     <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id_usuario"]; ?>">
-                                    <input type="submit" value=" Enviar Imagen " />
+                                    <input type="submit" value="Enviar" />
                                 </div>
                             </td>
                         </tr>
@@ -82,20 +81,22 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
-									<img src="<?php echo $row['ubicacion_foto'];?>" height="260" width="412" alt="">
-									<figcaption>
-										<h3><?php echo $row['titulo'];?></h3>
-										<span><?php echo $row['descripcion'];?></span>
-										<span>Votos: <?php echo $row['cont_votos'];?></span>
-										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Galeria">
+										<img src="<?php echo $row['ubicacion_foto'];?>" height="260" width="412" alt="">
+									</a>
+										<h3><?php echo utf8_encode($row['titulo']);?></h3>
+										<span><?php echo utf8_encode($row['descripcion']);?></span>
+										<br />
+										<h5> <i>
+										<span class="glyphicon glyphicon-check"></span>Votos: <?php echo $row['cont_votos'];?></span></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <?php if(isset($_SESSION['id_tipo_usuario'])){
 												 if ($_SESSION["id_tipo_usuario"] == 1){ ?>
-													<a href="eliminarFotoGaleria.php?idGaleriaFoto=<?php echo $row['id_galeria_fotos']; ?>" >Eliminar</a>
+													<a href="eliminarFotoGaleria.php?idGaleriaFoto=<?php echo $row['id_galeria_fotos']; ?>" ><span class="glyphicon glyphicon-remove"></span><u>Eliminar</u></a>
 										<?php 	} ?>
-													<a href="votarFotoGaleria.php?idGaleriaFoto=<?php echo $row['id_galeria_fotos']; ?>" >Votar</a>
+													<a href="votarFotoGaleria.php?idGaleriaFoto=<?php echo $row['id_galeria_fotos']; ?>" ><span class="glyphicon glyphicon-thumbs-up"></span><u>Votar</u></a>
 										  <?php 
 											 } ?>
-									</figcaption>
+										</i></h5>
 								</figure>
 							 </div>
 						<?php

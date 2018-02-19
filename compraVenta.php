@@ -2,7 +2,7 @@
 	require_once("conexion/require_once.php");
 	$queHacer = "Compra/Venta";
 	$conex= new Conection($servidor,$usuario,$pass,$db );
-	$queryGaleria="Select compra_venta.id_compra_venta, compra_venta.titulo, compra_venta.resumen, compra_venta.marca, compra_venta.modelo, compra_venta.precio, compra_venta.fecha, count(id_comentario_compra_venta) as cont_comentarios, compra_venta.cont_visitas, foto_compra_venta.ubicacion_foto From compra_venta Left Join comentario_compra_venta On compra_venta.id_compra_venta = comentario_compra_venta.id_compra_venta Left Join foto_compra_venta On compra_venta.id_compra_venta = foto_compra_venta.id_compra_venta
+	$queryGaleria="Select compra_venta.id_compra_venta, compra_venta.titulo, compra_venta.resumen, compra_venta.marca, compra_venta.modelo, compra_venta.precio, compra_venta.fecha, compra_venta.cont_visitas, foto_compra_venta.ubicacion_foto From compra_venta Left Join comentario_compra_venta On compra_venta.id_compra_venta = comentario_compra_venta.id_compra_venta Left Join foto_compra_venta On compra_venta.id_compra_venta = foto_compra_venta.id_compra_venta
 Where foto_compra_venta.numero_foto > 0 Group By compra_venta.id_compra_venta Desc Limit 10";
 	$queryContador = "select count(id_compra_venta) as total From compra_venta";
 
@@ -25,6 +25,7 @@ Where foto_compra_venta.numero_foto > 0 Group By compra_venta.id_compra_venta De
 				 <div class="banner">
                     <h5 class="top" align="center">Esta zona cuenta con los vehiculos promocionados por ustedes mismos.</h5>
                     <h5 class="top" align="center">AutosTime no se hace responsable de ninguno.</h5>
+					<br />
                 </div>
                 <?php
 				if(!isset($_SESSION["id_usuario"])):
@@ -46,7 +47,14 @@ Where foto_compra_venta.numero_foto > 0 Group By compra_venta.id_compra_venta De
                                 <p><b>Modelo: </b><?php echo $rowCompraVenta['modelo'];?></p>
                                 <p><?php echo utf8_encode($rowCompraVenta['resumen']);?>...</p>
                                 <p><b>Fecha Publicación: </b><?php echo $rowCompraVenta['fecha'];?><br />
-                                    <span class="glyphicon glyphicon-comment"></span> <?php echo $rowCompraVenta['cont_comentarios'];?>
+                                    <span class="glyphicon glyphicon-comment"></span> 
+									<?php 
+										$idCompraVentap = $rowCompraVenta['id_compra_venta'];
+										$queryComentarios = "select count(id_comentario_compra_venta) as cont_comentarios from comentario_compra_venta where id_compra_venta = $idCompraVentap";
+										$resultsComentarios = $conex->consulta($queryComentarios); 
+										$rowComentarios = mysqli_fetch_array($resultsComentarios); 
+										echo $rowComentarios['cont_comentarios'];
+									?>
                                     <span class="glyphicon glyphicon-eye-open"></span> <?php echo $rowCompraVenta['cont_visitas'];?>
                                     <a class="span_link" href="detalleCompraVenta.php?idCompraVenta=<?php echo $rowCompraVenta['id_compra_venta'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
                                 </p>

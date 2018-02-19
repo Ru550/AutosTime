@@ -5,8 +5,8 @@
 	
 	$conex= new Conection($servidor,$usuario,$pass,$db );
 	
-	$qryPrimEvento="Select evento.id_evento, evento.titulo, evento.resumen, evento.fecha, count(id_comentario_evento) as cont_comentarios, evento.cont_visitas, foto_evento.ubicacion_foto From evento left Join comentario_evento on evento.id_evento = comentario_evento.id_evento left Join foto_evento on evento.id_evento = foto_evento.id_evento where foto_evento.numero_foto = 1 And evento.id_evento != $idEvento And evento.fecha >= curdate() group by evento.id_evento Order By evento.fecha Asc Limit 1 ";
-	$qryEventos="Select evento.id_evento, evento.titulo, evento.resumen, evento.fecha, count(id_comentario_evento) as cont_comentarios, evento.cont_visitas, foto_evento.ubicacion_foto From evento left Join comentario_evento on evento.id_evento = comentario_evento.id_evento left Join foto_evento on evento.id_evento = foto_evento.id_evento where foto_evento.numero_foto = 1 And evento.id_evento != $idEvento And evento.fecha >= curdate() group by evento.id_evento Order By evento.fecha Asc Limit 1,5";
+	$qryPrimEvento="Select evento.id_evento, evento.titulo, evento.resumen, evento.fecha, count(id_comentario_evento) as cont_comentarios, evento.cont_visitas, foto_evento.ubicacion_foto From evento left Join comentario_evento on evento.id_evento = comentario_evento.id_evento left Join foto_evento on evento.id_evento = foto_evento.id_evento where foto_evento.numero_foto > 0 And evento.id_evento != $idEvento And evento.fecha >= curdate() group by evento.id_evento Order By evento.fecha Asc Limit 1 ";
+	$qryEventos="Select evento.id_evento, evento.titulo, evento.resumen, evento.fecha, count(id_comentario_evento) as cont_comentarios, evento.cont_visitas, foto_evento.ubicacion_foto From evento left Join comentario_evento on evento.id_evento = comentario_evento.id_evento left Join foto_evento on evento.id_evento = foto_evento.id_evento where foto_evento.numero_foto > 0 And evento.id_evento != $idEvento And evento.fecha >= curdate() group by evento.id_evento Order By evento.fecha Asc Limit 1,5";
 	$qrySelfie="SELECT galeria_selfie.id_selfie, galeria_selfie.titulo, galeria_selfie.descripcion, galeria_selfie.ubicacion_foto, galeria_selfie.fecha_alta, COUNT(usuario_votos_selfie.id_selfie) as votos FROM galeria_selfie  LEFT JOIN usuario_votos_selfie ON galeria_selfie.id_selfie = usuario_votos_selfie.id_selfie GROUP BY galeria_selfie.id_selfie DESC LIMIT 1;";
 	$qryHumor="SELECT id_humor, titulo, descripcion, ubicacion_foto, fecha_alta FROM galeria_humor ORDER BY id_humor DESC LIMIT 1";
 									
@@ -26,7 +26,14 @@
 					<a href="detalleEvento.php?idEvento=<?php echo $rowPrimEvento['id_evento'];?>"><img src="<?php echo $rowPrimEvento['ubicacion_foto'];?>" class="img-responsive" alt=""></a>
 					<h5 class="top"><a href="detalleEvento.php?idEvento=<?php echo $rowPrimEvento['id_evento'];?>"><?php echo utf8_encode($rowPrimEvento['titulo']);?></a></h5>
 					<p><?php echo utf8_encode($rowPrimEvento['resumen']);?> ...</p>
-					<p><i class="glyphicon glyphicon-time"></i> <?php echo date("d/m/Y", strtotime($rowPrimEvento['fecha'])); ?><span class="glyphicon glyphicon-comment"></span><?php echo $rowPrimEvento['cont_comentarios'];?> <span class="glyphicon glyphicon-eye-open"></span>
+					<p><i class="glyphicon glyphicon-time"></i> <?php echo date("d/m/Y", strtotime($rowPrimEvento['fecha'])); ?><span class="glyphicon glyphicon-comment"></span>
+					<?php 
+						$idEventop = $rowPrimEvento['id_evento'];
+						$queryComentarios = "select count(id_comentario_evento) as cont_comentarios from comentario_evento where id_evento = $idEventop";
+						$resultsComentarios = $conex->consulta($queryComentarios); 
+						$rowComentarios = mysqli_fetch_array($resultsComentarios); 
+						echo $rowComentarios['cont_comentarios'];
+					?> <span class="glyphicon glyphicon-eye-open"></span>
 					   <?php echo $rowPrimEvento['cont_visitas'];?><a class="span_link" href="detalleEvento.php?idEvento=<?php echo $rowPrimEvento['id_evento'];?>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
 					</p>
 				<?php

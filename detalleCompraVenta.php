@@ -26,12 +26,6 @@
 	$resultPublicoCompraVenta =$conex->consulta($qryPublicoCompraVenta);
 	$resultsGaleria =$conex->consulta($qryGaleria);
 
-/*	$resultCompraVenta = mysql_query($qryCompraVenta);
-	$resultComentarios = mysql_query($qryComentarios);
-	$resultPrimFoto = mysql_query($qryPrimFoto);
-	$resultPublicoCompraVenta = mysql_query($qryPublicoCompraVenta);
-	$resultsGaleria = mysql_query($qryGaleria);*/
-
 	include("cabeza.php");
 	include("menu.php");
 ?>
@@ -41,6 +35,7 @@
 		<div class="banner-section">
 	        <?php
 				while($rowPrimFoto = mysqli_fetch_array($resultPrimFoto)){
+					$titulo = utf8_encode($rowPrimFoto['titulo']);
 			?>
                    <h3 class="tittle"><?php echo utf8_encode($rowPrimFoto['titulo']);?> <i class="glyphicon glyphicon-file"></i></h3>
                    <img src="<?php echo $rowPrimFoto['ubicacion_foto'];?>" class="img-responsive" alt="">           
@@ -87,26 +82,32 @@
                         <p class="sub"><b>Transmisión:</b> <?php echo utf8_encode($rowCompraVenta['transmision']);?></p>
                         <p class="sub"><b>Tipo de Combustible:</b> <?php echo utf8_encode($rowCompraVenta['tipo_combustible']);?></p>
                         <p class="sub"><b>Descripción:</b> <?php echo utf8_encode($rowCompraVenta['descripcion']);?></p>
-                        <p><b>Fecha de Publicación:</b> <?php echo date("d/m/Y", strtotime($rowCompraVenta['fecha']));?>
+                        <p><b>Fecha de Publicación:</b> <br /><?php echo date("d/m/Y", strtotime($rowCompraVenta['fecha']));?>
                              <span class="glyphicon glyphicon-comment"></span> <?php echo $rowCompraVenta['cont_comentarios'];?>
                              <span class="glyphicon glyphicon-eye-open"></span> <?php echo $rowCompraVenta['cont_visitas'];?>
                         </p>
                     </div>
                 </div>
+			<?php 
+				if(!empty($rowCompraVenta['url_facebook']) || !empty($rowCompraVenta['url_twitter'])){
+			?>
 			<div class="single-bottom">
 				<div class="single-middle">
 					<ul class="social-share">
 						<li><span><b>Redes Sociales de la Compra/Venta: </b></span></li>
                         <li></li>
-						<li><a href="<?php echo $rowCompraVenta['url_facebook'];?>" target="_blank"><i> </i></a></li>						
-						<li><a href="<?php echo $rowCompraVenta['url_twitter'];?>" target="_blank"><i class="tin"> </i></a></li>				
+						<?php if(!empty($rowCompraVenta['url_facebook'])){ ?>
+							<li><a href="<?php echo $rowCompraVenta['url_facebook'];?>" target="_blank"><i> </i></a></li>						
+						<?php } if(!empty($rowCompraVenta['url_twitter'])){ ?>	
+							<li><a href="<?php echo $rowCompraVenta['url_twitter'];?>" target="_blank"><i class="tin"> </i></a></li>				
+						<?php } ?>
 					</ul>
 					<i class="arrow"> </i>
 					<div class="clearfix"> </div>
 			   </div>
 			</div>			
 			<?php
-				}
+				}}
 			?>
              <div class="gallery-section">
 				<h3 class="tittle">Galeria <i class="glyphicon glyphicon-fullscreen"></i></h3>
@@ -117,10 +118,9 @@
 						?>
 							 <div class="col-md-4 cate-grid grid">
 								<figure>
-									<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
-									<figcaption>
-										<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="Interior Design">VER</a>
-									</figcaption>
+									<a class="example-image-link" href="<?php echo $row['ubicacion_foto'];?>" data-lightbox="example-1" data-title="<?php echo $titulo; ?>">
+										<img src="<?php echo $row['ubicacion_foto'];?>" height="150" width="450" alt="">
+									</a>
 								</figure>
 							 </div>
 						<?php
@@ -147,7 +147,7 @@
                             <p><h5><?php echo utf8_encode($rowComentario['titulo']);?></h5></p>
                             <p><?php echo utf8_encode($rowComentario['descripcion']);?></p>
                             <ul>
-                                <li><?php echo date("d/m/Y h:m:s", strtotime($rowComentario['fecha']));?></li>
+                                <li><?php echo date("d/m/Y g:i:s A", strtotime($rowComentario['fecha']));?></li>
                             </ul>
                         </div>
                         <div class="clearfix"> </div>
